@@ -1,0 +1,27 @@
+image: maven:3.9.6-eclipse-temurin-21
+
+stages:
+  - build
+  - test
+  - deploy
+
+build-job:
+  stage: build
+  script:
+    - echo "Building..."
+
+java:
+  stage: test
+  script:
+    - mvn verify
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - target/surefire-reports/TEST-*.xml
+        - target/failsafe-reports/TEST-*.xml
+
+deploy-job:
+  stage: deploy
+  script:
+    - echo "Deploying..."
